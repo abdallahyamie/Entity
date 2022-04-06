@@ -1,4 +1,4 @@
-# Open-World Entity Segmentation [Preject Website]()
+# Open-World Entity Segmentation <font size=6>[Project Website](http://luqi.info/Entity_Web/)</font>
 Lu Qi\*, Jason Kuen\*, Yi Wang, Jiuxiang Gu, Hengshuang Zhao, Zhe Lin, Philip Torr, Jiaya Jia
 
 <div align="center">
@@ -15,7 +15,7 @@ This project provides an implementation for the paper "[Open-World Entity Segmen
 ## Installation
 This project is based on [Detectron2](https://github.com/facebookresearch/detectron2), which can be constructed as follows.
 * Install Detectron2 following [the instructions](https://detectron2.readthedocs.io/tutorials/install.html). We are noting that our code is implemented in detectron2 commit version 28174e932c534f841195f02184dc67b941c65a67 and pytorch 1.8.
-* Setup the coco dataset including instance and panoptic annotations following [the structure](https://github.com/facebookresearch/detectron2/blob/master/datasets/README.md). \textbf{The code of entity evaluation metric is saved in the file of modified_cocoapi.}
+* Setup the coco dataset including instance and panoptic annotations following [the structure](https://github.com/facebookresearch/detectron2/blob/master/datasets/README.md). The code of entity evaluation metric is saved in the file of modified_cocoapi.
 * Copy this project to `/path/to/detectron2/projects/EntitySeg`
 * Set the "find_unused_parameters=True" in distributed training of your own detectron2. You could modify it in detectron2/engine/defaults.py.
 
@@ -72,8 +72,16 @@ wget https://github.com/SwinTransformer/storage/releases/download/v1.0.0/swin_ti
 python tools/convert_swin_to_d2.py swin_tiny_patch4_window7_224.pth swin_tiny_patch4_window7_224_trans.pth
 ```
 
+## Pretrained weights of [Segformer Backbone](https://github.com/NVlabs/SegFormer)
+
+Use the tools/convert_mit_to_d2.py to convert the pretrained weights of [SegFormer Backbone](https://drive.google.com/drive/folders/1b7bwrInTW4VLEm27YawHOAMSMikga2Ia) to the detectron2 format. For example,
+```bash
+pip install timm
+python tools/convert_mit_to_d2.py mit_b0.pth mit_b0_trans.pth
+```
+
 ## Results
-We provide the results of several pretrained models on COCO *val* set. It is easy to extend it to other backbones. *Rescore* indicates that we use mask rescoring by setting `MODEL.CONDINST.MASK_BRANCH.USE_MASK_RESCORE` to `True`.
+We provide the results of several pretrained models on COCO *val* set. It is easy to extend it to other backbones. *Rescore* indicates that we use mask rescoring in inference by setting `MODEL.CONDINST.MASK_BRANCH.USE_MASK_RESCORE` to `True`.
 
 <table><tbody>
 <!-- START TABLE -->
@@ -118,8 +126,8 @@ We provide the results of several pretrained models on COCO *val* set. It is eas
 <td align="center">R101</td>
 <td align="center">3x</td>
 <td align="center">No</td>
-<td align="center">  </td>
-<td align="center"> <a href="">model</a>&nbsp;|&nbsp;<a href="">metrics</a> </td>
+<td align="center">33.2</td>
+<td align="center"> <a href="https://drive.google.com/file/d/1a58lNf8n6aJYY0_Lq-R002AHJpWqnEtv/view?usp=sharing">model</a>&nbsp;|&nbsp;<a href="https://drive.google.com/file/d/1aFYBQgK7ji6KMOfffFlyWA7gL_1bCgde/view?usp=sharing">metrics</a> </td>
 
 <tr><td align="center">Ours</td>
 <td align="center">R101-DCNv2</td>
@@ -154,12 +162,33 @@ We provide the results of several pretrained models on COCO *val* set. It is eas
 <td align="center">Swin-L-W7</td>
 <td align="center">3x</td>
 <td align="center">No</td>
-<td align="center">  </td>
-<td align="center"> <a href="">model</a>&nbsp;|&nbsp;<a href="">metrics</a> </td>
+<td align="center"> 38.6 </td>
+<td align="center"> <a href="https://drive.google.com/file/d/1xPWkf0WiF14h7wM7nuapOAEIqZsStGdm/view?usp=sharing">model</a>&nbsp;|&nbsp;<a href="https://drive.google.com/file/d/19ffW1Oz-Cyf46y8k0Tz8rILLANjLqZES/view?usp=sharing">metrics</a> </td>
+
+<tr><td align="center">Ours</td>
+<td align="center">Swin-L-W7</td>
+<td align="center">3x</td>
+<td align="center">Yes</td>
+<td align="center"> 40.0 </td>
+<td align="center"> <a href="https://drive.google.com/file/d/1xPWkf0WiF14h7wM7nuapOAEIqZsStGdm/view?usp=sharing">model</a>&nbsp;|&nbsp;<a href="https://drive.google.com/file/d/19ffW1Oz-Cyf46y8k0Tz8rILLANjLqZES/view?usp=sharing">metrics</a> </td>
 
 <tr><td align="center">Ours</td>
 <td align="center">Swin-L-W12</td>
 <td align="center">3x</td>
+<td align="center">No</td>
+<td align="center">  </td>
+<td align="center"> <a href="">model</a>&nbsp;|&nbsp;<a href="">metrics</a> </td>
+
+<tr><td align="center">Ours</td>
+<td align="center">MiT-b0</td>
+<td align="center">1x</td>
+<td align="center">No</td>
+<td align="center"> 28.8 </td>
+<td align="center"> <a href="https://drive.google.com/file/d/1VxQAYsvJeNASHdfE8_XSOkQ9Kwwok4Ah/view?usp=sharing">model</a>&nbsp;|&nbsp;<a href="https://drive.google.com/file/d/1IUMyBbLlk5xxqVZn2NeK0FRu4cTMeDTd/view?usp=sharing">metrics</a> </td>
+
+<tr><td align="center">Ours</td>
+<td align="center">MiT-b5</td>
+<td align="center">1x</td>
 <td align="center">No</td>
 <td align="center">  </td>
 <td align="center"> <a href="">model</a>&nbsp;|&nbsp;<a href="">metrics</a> </td>
